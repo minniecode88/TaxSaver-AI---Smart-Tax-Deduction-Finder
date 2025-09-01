@@ -70,6 +70,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
         }
         
         .logo-icon {
@@ -584,6 +585,76 @@
             color: var(--gray);
         }
         
+        /* Page Content */
+        .page-content {
+            display: none;
+            padding: 120px 0 60px;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-title {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
         /* Responsive Design */
         @media (max-width: 992px) {
             .features-grid {
@@ -640,6 +711,10 @@
             .hero-heading {
                 font-size: 2.2rem;
             }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -647,139 +722,199 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <div class="logo">
+            <div class="logo" onclick="showPage('home')">
                 <div class="logo-icon"><i class="fas fa-calculator"></i></div>
                 <div class="logo-text">TaxSaver AI</div>
             </div>
             
             <nav>
                 <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#features" onclick="scrollToSection('features'); return false;">Features</a></li>
+                    <li><a href="#" onclick="showPage('pricing'); return false;">Pricing</a></li>
+                    <li><a href="#testimonials" onclick="scrollToSection('testimonials'); return false;">Testimonials</a></li>
+                    <li><a href="#" onclick="showPage('faq'); return false;">FAQ</a></li>
                 </ul>
             </nav>
             
             <div class="auth-buttons">
-                <button class="btn btn-outline">Log In</button>
-                <button class="btn btn-primary">Sign Up Free</button>
+                <button class="btn btn-outline" onclick="openModal('login')">Log In</button>
+                <button class="btn btn-primary" onclick="openModal('signup')">Sign Up Free</button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <h1 class="hero-heading">Maximize Your Tax Savings with AI Technology</h1>
-                <p class="hero-subheading">TaxSaver AI finds every deduction you qualify for, so you don't leave money on the table. Get started today and save an average of $2,800 on your taxes.</p>
-                <div class="auth-buttons">
-                    <button class="btn btn-primary">Get Started</button>
-                    <button class="btn btn-outline">Watch Demo</button>
+    <!-- Home Page -->
+    <div id="home-page" class="page-content active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-heading">Maximize Your Tax Savings with AI Technology</h1>
+                    <p class="hero-subheading">TaxSaver AI finds every deduction you qualify for, so you don't leave money on the table. Get started today and save an average of $2,800 on your taxes.</p>
+                    <div class="auth-buttons">
+                        <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
+                        <button class="btn btn-outline" onclick="openModal('demo')">Watch Demo</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-image-placeholder">
+                        AI Tax Dashboard Preview
+                    </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="hero-image-placeholder">
-                    AI Tax Dashboard Preview
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="section-title">Smart Tax Savings Features</h2>
-                <p class="section-subtitle">Our AI-powered platform helps you identify every possible deduction and credit</p>
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-heading">
+                    <h2 class="section-title">Smart Tax Savings Features</h2>
+                    <p class="section-subtitle">Our AI-powered platform helps you identify every possible deduction and credit</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="feature-title">AI Deduction Finder</h3>
+                        <p class="feature-description">Our advanced AI scans thousands of tax scenarios to find deductions you qualify for.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <h3 class="feature-title">Receipt Scanning</h3>
+                        <p class="feature-description">Simply upload photos of your receipts, and we'll automatically categorize them for deductions.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="feature-title">Tax Visualization</h3>
+                        <p class="feature-description">Understand your tax situation with easy-to-read charts and personalized recommendations.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="feature-title">Export Reports</h3>
+                        <p class="feature-description">Generate professional PDF reports to share with your accountant or for your records.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="feature-title">Smart Reminders</h3>
+                        <p class="feature-description">Get timely notifications about tax deadlines and suggestions for tax-saving actions.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Secure & Private</h3>
+                        <p class="feature-description">Bank-level encryption ensures your financial data remains safe and confidential.</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3 class="feature-title">AI Deduction Finder</h3>
-                    <p class="feature-description">Our advanced AI scans thousands of tax scenarios to find deductions you qualify for.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-receipt"></i>
-                    </div>
-                    <h3 class="feature-title">Receipt Scanning</h3>
-                    <p class="feature-description">Simply upload photos of your receipts, and we'll automatically categorize them for deductions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <h3 class="feature-title">Tax Visualization</h3>
-                    <p class="feature-description">Understand your tax situation with easy-to-read charts and personalized recommendations.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <h3 class="feature-title">Export Reports</h3>
-                    <p class="feature-description">Generate professional PDF reports to share with your accountant or for your records.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <h3 class="feature-title">Smart Reminders</h3>
-                    <p class="feature-description">Get timely notifications about tax deadlines and suggestions for tax-saving actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Secure & Private</h3>
-                    <p class="feature-description">Bank-level encryption ensures your financial data remains safe and confidential.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="section-title">How TaxSaver AI Works</h2>
-                <p class="section-subtitle">Start maximizing your tax savings in just three simple steps</p>
-            </div>
-            
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Create Your Account</h3>
-                    <p class="step-description">Sign up and connect your financial accounts securely</p>
+        <!-- How It Works Section -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <div class="section-heading">
+                    <h2 class="section-title">How TaxSaver AI Works</h2>
+                    <p class="section-subtitle">Start maximizing your tax savings in just three simple steps</p>
                 </div>
                 
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">AI Analysis</h3>
-                    <p class="step-description">Our AI scans for deductions and credits you qualify for</p>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">Maximize Savings</h3>
-                    <p class="step-description">Implement recommendations and save on your taxes</p>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Create Your Account</h3>
+                        <p class="step-description">Sign up and connect your financial accounts securely</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">AI Analysis</h3>
+                        <p class="step-description">Our AI scans for deductions and credits you qualify for</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Maximize Savings</h3>
+                        <p class="step-description">Implement recommendations and save on your taxes</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-heading">
+                    <h2 class="section-title">What Our Users Say</h2>
+                    <p class="section-subtitle">Join thousands of satisfied users who are maximizing their tax savings</p>
+                </div>
+                
+                <div class="testimonial-cards">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"TaxSaver AI found over $3,200 in deductions I had completely missed. This app paid for itself many times over!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JD</div>
+                            <div class="author-details">
+                                <h4>John Davis</h4>
+                                <p class="author-role">Freelance Designer</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"As a small business owner, taxes are my biggest headache. This platform simplified everything and saved me thousands."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SM</div>
+                            <div class="author-details">
+                                <h4>Sarah Miller</h4>
+                                <p class="author-role">Restaurant Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The receipt scanning feature alone is worth it. I no longer have to keep piles of paper receipts organized."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RJ</div>
+                            <div class="author-details">
+                                <h4>Robert Johnson</h4>
+                                <p class="author-role">Consultant</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <h2>Start Maximizing Your Tax Savings Today</h2>
+                <p>Join over 50,000 users who are saving an average of $2,800 on their taxes with TaxSaver AI</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-light" onclick="openModal('signup')">Get Started</button>
+                    <button class="btn btn-outline" onclick="openModal('demo')">Schedule a Demo</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Pricing Page -->
+    <div id="pricing-page" class="page-content">
         <div class="container">
             <div class="section-heading">
                 <h2 class="section-title">Simple, Transparent Pricing</h2>
@@ -811,7 +946,7 @@
                         </div>
                     </div>
                     
-                    <button class="btn btn-primary">Get Started</button>
+                    <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -838,7 +973,7 @@
                         </div>
                     </div>
                     
-                    <button class="btn btn-primary">Get Started</button>
+                    <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
                 </div>
                 
                 <div class="pricing-card">
@@ -865,59 +1000,51 @@
                         </div>
                     </div>
                     
-                    <button class="btn btn-primary">Get Started</button>
+                    <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="section-title">What Our Users Say</h2>
-                <p class="section-subtitle">Join thousands of satisfied users who are maximizing their tax savings</p>
             </div>
             
-            <div class="testimonial-cards">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"TaxSaver AI found over $3,200 in deductions I had completely missed. This app paid for itself many times over!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JD</div>
-                        <div class="author-details">
-                            <h4>John Davis</h4>
-                            <p class="author-role">Freelance Designer</p>
-                        </div>
+            <div class="section-heading" style="margin-top: 80px;">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Common questions about our pricing plans</p>
+            </div>
+            
+            <div class="faq-items">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I change plans anytime?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can upgrade or downgrade your plan at any time. When upgrading, the new rate will apply immediately. When downgrading, the new rate will apply at the start of your next billing cycle.</p>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"As a small business owner, taxes are my biggest headache. This platform simplified everything and saved me thousands."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SM</div>
-                        <div class="author-details">
-                            <h4>Sarah Miller</h4>
-                            <p class="author-role">Restaurant Owner</p>
-                        </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you offer annual billing discounts?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer a 15% discount for annual billing on all plans. This can be selected during the checkout process.</p>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"The receipt scanning feature alone is worth it. I no longer have to keep piles of paper receipts organized."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RJ</div>
-                        <div class="author-details">
-                            <h4>Robert Johnson</h4>
-                            <p class="author-role">Consultant</p>
-                        </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there a free trial available?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer a 14-day free trial for all plans. No credit card is required to start your trial.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
+    <!-- FAQ Page -->
+    <div id="faq-page" class="page-content">
         <div class="container">
             <div class="section-heading">
                 <h2 class="section-title">Frequently Asked Questions</h2>
@@ -964,21 +1091,37 @@
                         <p>Our AI is designed to handle complex tax situations including investments, rental properties, and business ownership. For especially complex scenarios, our Business plan includes access to tax professionals for guidance.</p>
                     </div>
                 </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How often is the tax information updated?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our tax database is updated in real-time as new tax laws and regulations are passed. We have a team of tax experts who continuously monitor for changes that could affect our users.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What kind of support do you offer?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer email support for all plans with a 24-hour response time. Professional and Business plans include live chat support during business hours. Business plan customers also get dedicated phone support.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-heading" style="margin-top: 80px;">
+                <h2 class="section-title">Still have questions?</h2>
+                <p class="section-subtitle">Our support team is here to help you</p>
+                <div class="auth-buttons" style="justify-content: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="openModal('support')">Contact Support</button>
+                </div>
             </div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Start Maximizing Your Tax Savings Today</h2>
-            <p>Join over 50,000 users who are saving an average of $2,800 on their taxes with TaxSaver AI</p>
-            <div class="cta-buttons">
-                <button class="btn btn-light">Get Started</button>
-                <button class="btn btn-outline">Schedule a Demo</button>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -998,30 +1141,30 @@
                 <div class="footer-column">
                     <h3>Product</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="#features" onclick="scrollToSection('features'); return false;">Features</a></li>
+                        <li><a href="#" onclick="showPage('pricing'); return false;">Pricing</a></li>
+                        <li><a href="#use-cases" onclick="alert('Use cases page would be shown here'); return false;">Use Cases</a></li>
+                        <li><a href="#testimonials" onclick="scrollToSection('testimonials'); return false;">Testimonials</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
                     <h3>Resources</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Tax Guides</a></li>
-                        <li><a href="#">Webinars</a></li>
-                        <li><a href="#">Support Center</a></li>
+                        <li><a href="#blog" onclick="alert('Blog page would be shown here'); return false;">Blog</a></li>
+                        <li><a href="#tax-guides" onclick="alert('Tax guides page would be shown here'); return false;">Tax Guides</a></li>
+                        <li><a href="#webinars" onclick="alert('Webinars page would be shown here'); return false;">Webinars</a></li>
+                        <li><a href="#support" onclick="openModal('support'); return false;">Support Center</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
                     <h3>Company</h3>
                     <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#about" onclick="alert('About us page would be shown here'); return false;">About Us</a></li>
+                        <li><a href="#careers" onclick="alert('Careers page would be shown here'); return false;">Careers</a></li>
+                        <li><a href="#privacy" onclick="alert('Privacy policy page would be shown here'); return false;">Privacy Policy</a></li>
+                        <li><a href="#terms" onclick="alert('Terms of service page would be shown here'); return false;">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
@@ -1032,7 +1175,120 @@
         </div>
     </footer>
 
+    <!-- Modals -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('login')">&times;</span>
+            <h2 class="modal-title">Log In to Your Account</h2>
+            <div class="form-group">
+                <label for="login-email">Email Address</label>
+                <input type="email" id="login-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">Log In</button>
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="#" style="color: var(--secondary);">Forgot your password?</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('signup')">&times;</span>
+            <h2 class="modal-title">Create Your Account</h2>
+            <div class="form-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email Address</label>
+                <input type="email" id="signup-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create a password">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            <p style="text-align: center; margin-top: 20px;">
+                Already have an account? <a href="#" style="color: var(--secondary);" onclick="closeModal('signup'); openModal('login'); return false;">Log In</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="demo-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('demo')">&times;</span>
+            <h2 class="modal-title">Schedule a Demo</h2>
+            <div class="form-group">
+                <label for="demo-name">Full Name</label>
+                <input type="text" id="demo-name" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="demo-email">Email Address</label>
+                <input type="email" id="demo-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="demo-company">Company</label>
+                <input type="text" id="demo-company" placeholder="Enter your company name">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">Schedule Demo</button>
+        </div>
+    </div>
+
+    <div id="support-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('support')">&times;</span>
+            <h2 class="modal-title">Contact Support</h2>
+            <div class="form-group">
+                <label for="support-name">Full Name</label>
+                <input type="text" id="support-name" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="support-email">Email Address</label>
+                <input type="email" id="support-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="support-message">Message</label>
+                <input type="text" id="support-message" placeholder="How can we help you?">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">Send Message</button>
+        </div>
+    </div>
+
     <script>
+        // Page navigation functionality
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(`${pageId}-page`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(`${modalId}-modal`).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(`${modalId}-modal`).classList.remove('active');
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        });
+        
         // FAQ toggle functionality
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
@@ -1048,33 +1304,19 @@
                 } else {
                     icon.style.transform = 'rotate(0deg)';
                 }
-                
-                // Close other FAQ items
-                document.querySelectorAll('.faq-question').forEach(otherQuestion => {
-                    if (otherQuestion !== question) {
-                        const otherAnswer = otherQuestion.nextElementSibling;
-                        const otherIcon = otherQuestion.querySelector('i');
-                        otherAnswer.classList.remove('open');
-                        otherIcon.style.transform = 'rotate(0deg)';
-                    }
-                });
             });
         });
 
         // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 100,
+                    top: section.offsetTop - 100,
                     behavior: 'smooth'
                 });
-            });
-        });
+            }
+        }
 
         // Simple animation on scroll
         const observerOptions = {
